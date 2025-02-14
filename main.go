@@ -16,9 +16,16 @@ func main() {
 
 	// React에서 호출할 API
 	app.Post("/api/disupload", func(c *fiber.Ctx) error {
-		fmt.Println("disupload 실행")
-		return c.JSON(fiber.Map{"message": "disupload 실행 완료!"})
+
+		userPath := c.FormValue("path")
+
+		fmt.Printf("path is: %s\n", userPath)
+
+		return c.JSON(fiber.Map{
+			"message":       "disupload 실행 완료!",
+			"received_Path": userPath,
+		})
 	})
 
-	log.Fatal(app.Listen(":5001")) // React와 충돌 방지 위해 5000번 포트 사용
+	log.Fatal(app.Listen(":5001")) // React와 충돌 방지 위해 5001번 포트 사용
 }
